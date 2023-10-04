@@ -29,7 +29,7 @@ function MenuList({ state, setState }) {
         add sleep
       </button>
       <button onClick={(e) => setState(e.target.value)} value={"work"}>
-        add work
+        add work 1
       </button>
     </>
   );
