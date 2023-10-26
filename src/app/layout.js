@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import CurrentTime from '../../component/currentTime';
-import "../../styles/styles.module.css";
 
 export const metadata = {
   title: "For a meaningful day",
