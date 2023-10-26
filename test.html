@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Range Input Example</title>
+</head>
+<body>
+  <input type="range" id="myRange" min="0" max="100" step="1" value="50">
+  
+  <script>
+    // HTML 요소를 가져옵니다.
+    const rangeInput = document.getElementById('myRange');
+
+    // 사용 가능한 범위를 정의합니다.
+    const activeRangeStart = 51;
+    const activeRangeEnd = 100;
+
+    // 범위를 변경할 때 이벤트를 처리합니다.
+    rangeInput.addEventListener('input', (e) => {
+      const value = rangeInput.value;
+      if (value >= activeRangeStart && value <= activeRangeEnd) {
+        console.log(e.target.value);
+        // 사용 가능한 범위 내에 있으면 값을 변경합니다.
+        // 이 경우, 아무 작업도 수행하지 않습니다.
+      } else {
+        // 사용 가능한 범위를 벗어난 경우, 범위의 시작점으로 이동합니다.
+        rangeInput.value = activeRangeStart;
+      }
+    });
+  </script>
+</body>
+</html>

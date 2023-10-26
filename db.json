@@ -1,0 +1,37 @@
+{
+  "timeList": [
+    {
+      "id": 1,
+      "title": "tomorrowMid",
+      "settings": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "title": "sleep",
+      "settings": [
+        0,
+        20,
+        0,
+        0,
+        0
+      ],
+      "id": 2
+    },
+    {
+      "title": "godd",
+      "settings": [
+        0,
+        12,
+        30,
+        0,
+        0
+      ],
+      "id": 3
+    }
+  ]
+}
