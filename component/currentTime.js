@@ -31,7 +31,7 @@ export default function CurrentTime() {
             };
 
             setCurrentTime(timeObj);
-        }, 1000);
+        }, 100);
         return () => clearInterval(timer);
     }, [])
 

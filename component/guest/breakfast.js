@@ -3,100 +3,139 @@
 import { useEffect, useState } from 'react';
 import { getRemainingTime, getSetTime, timeData } from '../../logic/getTime';
 
+//바 조절 시 나오는 숫자 한자리 수를 두 자리수로
 
-export default function Breakfast({ breakfast }) {
+export default function GuestBreakfast({ timeName, menuArr }) {
 
-    const initCurrentTime = new Date();
-    const initRemainingTime = getRemainingTime(breakfast.breakfastState, initCurrentTime);
-    const [display, setDisplay] = useState(initRemainingTime);
-    const [setBtn, setTimeBtn] = useState(true);
+    const [settingTime, setSettingTime] = useState(null);
+    const [settingBtn, setSettingBtn] = useState(true);
+
+    useEffect(() => {
+        const timeSet = menuArr.menus.find(item => item.name === timeName.selectedTimeName)?.timeSettings; // 옵셔널 체이닝 ? 추가
+        const currentHours = new Date().getHours();
+        const timeSetHours = timeSet.getHours();
+
+        if (timeSetHours < currentHours) {
+            timeSet.setDate(timeSet.getDate() + 1);
+        }
+
+        setSettingTime(timeSet);
+    }, [timeName, menuArr])
 
     return (
         <>
-            {setBtn ?
-                <DisplayTime
-                    dp={{ display, setDisplay }}
-                    breakfast={breakfast}
-                    btn={{ setBtn, setTimeBtn }}
+            {settingBtn ?
+                <DisplayTime //설정값을 받고 시계를 계속 보여준다. 읽기.
+                    timeName={timeName}
+                    timeSet={{ settingTime, setSettingTime }}
+                    menuArr={menuArr}
+                    setBtn={{ settingBtn, setSettingBtn }}
                 /> :
-                <TimeSetting
-                    breakfast={breakfast}
-                    btn={{ setBtn, setTimeBtn }}
+                <TimeSetting //설정값을 받아서 변경. 값을 변화시켜야 함.
+                    timeName={timeName}
+                    timeSet={{ settingTime, setSettingTime }}
+                    menuArr={menuArr}
+                    rangeMin={(5) * 60}
+                    rangeMax={(9) * 60}
+                    setBtn={{ settingBtn, setSettingBtn }}
                 />}
         </>
     )
 }
 
+export function DisplayTime({ timeName, timeSet, menuArr, setBtn }) {
 
-function DisplayTime({ dp, breakfast, btn }) {
+    const [display, setDisplay] = useState(null);
 
     useEffect(() => {
         const timer = setInterval(() => {
             const currentTime = new Date();
-            let breakfastTime = breakfast.breakfastState;
+            const currentTimeHours = currentTime.getHours();
+            let menuTime = timeSet.settingTime;
+            const menuTimeHours = menuTime.getHours();
+            const menuTimeMinutes = menuTime.getMinutes();
 
-            if (breakfastTime.getHours() <= currentTime.getHours()) {
-                breakfastTime = getSetTime(1, breakfastTime.getHours(), breakfastTime.getMinutes(), 0, 0);
+            if (currentTimeHours > menuTimeHours) {
+                menuTime = getSetTime(1, menuTimeHours, menuTimeMinutes, 0, 0);
             }
 
-            const remainingTime = getRemainingTime(breakfastTime, currentTime);
-            dp.setDisplay(remainingTime);
-        }, 1000);
+            const remainingTime = getRemainingTime(menuTime, currentTime);
+            setDisplay(remainingTime);
+        }, 100);
         return () => { clearInterval(timer) };
-    })
+    }, [timeSet, display])
 
-    function onClickBtn(e) {
-        btn.setBtn ? btn.setTimeBtn(false) : btn.setTimeBtn(true)
+    function onClickBtn() {
+        setBtn.setSettingBtn(!setBtn.settingBtn); //토글버튼 수정
     }
 
     return (
         <>
             <div>
-                <div>{`breakfast : ${dp.display.rtHours} : ${dp.display.rtMinutes} : ${dp.display.rtSeconds}`}</div>
-                <div>{`setting time 
-                : ${dp.display.setTimeData.getMonth()}
-                / ${dp.display.setTimeData.getDate()} 
-                - ${dp.display.setTimeData.getHours()} 
-                : ${dp.display.setTimeData.getMinutes()}`}</div>
-                <button onClick={(e) => onClickBtn(e)}>set</button>
-            </div >
+                <div>{`${timeName.selectedTimeName} : `}
+                    {display ? `${display.rtHours} : ${display.rtMinutes} : ${display.rtSeconds}` : `loading...`}
+                </div>
+
+                <div>
+                    {`setting time : `}
+                    {display ? `${display.setTimeData.getMonth() + 1} / ${display.setTimeData.getDate()} - ${display.setTimeData.getHours()} : ${display.setTimeData.getMinutes()}`
+                        : `loading...`}
+                </div>
+                <button onClick={() => onClickBtn()}>setting</button>
+            </div>
         </>
     )
 }
 
 
-function TimeSetting({ breakfast, btn }) {
+function TimeSetting({ timeName, timeSet, menuArr, rangeMin, rangeMax, setBtn }) {
 
-    const initBreakfastTime = breakfast.breakfastState;
-    let initBreakfast = initBreakfastTime.getHours() * 60 + initBreakfastTime.getMinutes();
+    const initCurrentDate = new Date().getDate();
+    const initMenuTime = timeSet.settingTime;
+    const initMenuDate = initMenuTime.getDate();
+    const initMenuHours = initMenuTime.getHours();
+    const initMenuMinutes = initMenuTime.getMinutes();
 
-    const [selectedBreakfastTime, setSelectedBreakfastTime] = useState(initBreakfast);
-    console.log('selectedBreakfastTime', selectedBreakfastTime);
+    let initMenuValue = initMenuHours * 60 + initMenuMinutes;
 
-    function onClickSelectTime() {
-        const timeObj = timeData(selectedBreakfastTime);
-        const setBreakfastTime = getSetTime(0, timeObj.hours, timeObj.minutes, 0, 0);
-        breakfast.setBreakfastState(setBreakfastTime);
-        btn.setBtn ? btn.setTimeBtn(false) : btn.setTimeBtn(true);
+    if (initMenuDate > initCurrentDate) {
+        initMenuValue = initMenuHours * 60 + initMenuMinutes + (24 * 60);
     }
 
-    let timeDataObj = timeData(selectedBreakfastTime);
-    const rangeMin = 0;
-    const rangeMax = 12 * 60;
+    const [selectValue, setSelectValue] = useState(initMenuValue);
+
+    const timeObj = timeData(selectValue);
+    const setMenuTime = getSetTime(0, timeObj.hours, timeObj.minutes, 0, 0);
+
+
+    function onClickSelectTime() {
+
+        const updatedMenus = menuArr.menus.map(item => { //for을 map으로 수정
+            if (item.name === timeName.selectedTimeName) {
+                return { ...item, timeSettings: setMenuTime };
+            }
+            return item;
+        });
+        menuArr.setMenu(updatedMenus);
+
+        setBtn.setSettingBtn(!setBtn.settingBtn);
+    }
+
+    let timeDataObj = timeData(selectValue);
 
     function inputRange(e) {
         let rangeValue = e.target.value;
-        setSelectedBreakfastTime(Math.floor(rangeValue));
+        setSelectValue(rangeValue);
     }
 
     return (<>
-        <div>{`breakfast ${timeDataObj.hours} : ${timeDataObj.minutes}`}</div>
+        <div>{`${timeDataObj.day} : ${timeDataObj.hours} : ${timeDataObj.minutes}`}</div>
         <input
             type='range'
             min={rangeMin}
             max={rangeMax}
             step={30}
-            value={selectedBreakfastTime}
+            value={selectValue}
             onChange={(e) => inputRange(e)}
         />
         <button onClick={() => onClickSelectTime()}>save</button >

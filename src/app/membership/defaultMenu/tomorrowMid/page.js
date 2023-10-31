@@ -6,25 +6,33 @@ import Control from '../../Control';
 
 export default function TomorrowMidPage() {
 
+  const timeSet = getSetTime(1, 0, 0, 0, 0);
   const [tomorrowMid, setTomorrowMid] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
       const currentTime = new Date();
-      const tomorrowMidTime = getSetTime(1, 0, 0, 0, 0);
-      const remainingTime = getRemainingTime(tomorrowMidTime, currentTime);
+      const remainingTime = getRemainingTime(timeSet, currentTime);
       setTomorrowMid(remainingTime);
-    }, 1000);
+      setLoading(false);
+    }, 100);
     return () => clearInterval(timer);
-  }, []);
+  }, [timeSet])
 
   return (
     <>
       <div>
         {`tomorrowMid : `}
-        {tomorrowMid ? `${tomorrowMid.rtHours} : ${tomorrowMid.rtMinutes} : ${tomorrowMid.rtSeconds}` : `loading...`}
+        {loading ? 'loading...' :
+          `${tomorrowMid.rtHours} : ${tomorrowMid.rtMinutes} : ${tomorrowMid.rtSeconds}`}
+      </div>
+      <div>
+        {`setting time : `}
+        {loading ? 'loading...' :
+          `${timeSet.getMonth() + 1} / ${timeSet.getDate()} - ${timeSet.getHours()} : ${timeSet.getMinutes()}`}
       </div>
       <Control />
     </>
-  );
+  )
 }

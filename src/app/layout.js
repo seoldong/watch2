@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import CurrentTime from '../../component/currentTime';
+import HomePage from './page';
+import DefaultMenu from '../../component/guest/defaultMenu';
 
 export const metadata = {
   title: "For a meaningful day",
@@ -8,23 +10,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 
-  const login = 0;
-
   return (
     <html>
       <body>
+
         <nav>
           <div><CurrentTime /></div>
-          <div id="UserState">
-            <div>
-              <Link href={`/`}>guest</Link>
-            </div>
-            <div>
-              <Link href={`/membership`}>로그인</Link>
-            </div>
+          <div>
+            <Link href={'/signIn'}>sign in</Link><br />
+            <Link href={'/signUp'}>sign up</Link>
           </div>
         </nav>
-        <section id="ContentContainer">{children}</section>
+
+        <section id="ContentContainer">
+          <div>{children}</div>
+        </section>
+
       </body>
     </html>
   );

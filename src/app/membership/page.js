@@ -1,13 +1,14 @@
-import Link from 'next/link';
-import TomorrowMidnight from '../../../component/guest/tomorrowMid';
-import Control from './Control';
+'use client'
 
-export default async function MembershipPage() {
+import { useRouter } from 'next/navigation';
+
+export default function MembershipPage() {
+
+  // const router = useRouter();
+  // router.push('/');
 
   return (
     <>
-      <TomorrowMidnight />
-      <Control />
     </>
   );
 }

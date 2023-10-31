@@ -15,7 +15,7 @@
       "title": "sleep",
       "settings": [
         0,
-        20,
+        19,
         0,
         0,
         0
@@ -23,7 +23,7 @@
       "id": 2
     },
     {
-      "title": "godd",
+      "title": "seol",
       "settings": [
         0,
         12,
@@ -32,6 +32,17 @@
         0
       ],
       "id": 3
+    },
+    {
+      "title": "dong",
+      "settings": [
+        0,
+        16,
+        0,
+        0,
+        0
+      ],
+      "id": 4
     }
   ]
 }

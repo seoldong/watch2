@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 // > 자정이 되면 날짜 초기 데이터 날짜 바꾸기
 // > 새로 추가하는 날짜는 바 이동이 자유로워야 할듯? 아닌가?
 
-export default function AddPage() {
+export default function CustomAddPage() {
 
     const router = useRouter();
 
@@ -32,14 +32,6 @@ export default function AddPage() {
             const title = e.target.title.value;
             const time = selectedTime;
             const settingValue = timeData(time);
-
-            //
-
-
-
-
-            //
-
 
             const settings = [0, settingValue.hours, settingValue.minutes, 0, 0];
             const options = {
