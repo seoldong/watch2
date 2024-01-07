@@ -12,6 +12,7 @@ import CustomMenuModifyPage from '../modify/page'
 function CustomPage() {
   const params = useParams();
   const title = params.title;
+
   const [settingTime, setSettingTime] = useState(null);
   const [settingBtn, setSettingBtn] = useState(true);
 
@@ -54,6 +55,5 @@ function CustomPage() {
     </>
   )
 }
-
 
 export default CustomPage;

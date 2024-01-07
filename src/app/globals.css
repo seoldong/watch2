@@ -29,6 +29,15 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   /* position: relative; */
   border-radius: 50%;
+  width: 60px;
+  height: 30px;
+  background: rgb(115, 115, 115);
+  /* border-radius: 0.5px; */
+  cursor: pointer;
+  position: relative;
+  top: -10px;
+  outline: 2px solid rgb(115, 115, 115);
+  outline-offset: 5px;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {

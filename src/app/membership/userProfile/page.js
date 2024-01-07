@@ -39,6 +39,7 @@ export default function UserProfile() {
         console.log(error);
       }
     };
+
     return () => tokenVerification();
   }, [router]);
 
@@ -203,3 +204,4 @@ export default function UserProfile() {
     </div>
   );
 }
+
