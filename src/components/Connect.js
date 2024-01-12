@@ -6,8 +6,12 @@ function Connect() {
 
   return (
     <div
-      className="static
-      sm:h-44 sm:flex sm:justify-center sm:items-center sm:items-end sm:flex
+      className="
+      2xl:absolute 2xl:right-0 2xl:top-0 2xl:w-2/6 2xl:h-full
+      xl:absolute xl:right-0 xl:top-0 xl:w-2/6 xl:h-full
+      lg:absolute lg:right-0 lg:top-0 lg:w-2/6 lg:h-full
+      md:absolute md:right-0 md:top-0 md:w-2/6
+      sm:w-full sm:flex-none sm:bottom-0
       "
     >
       {iconBtn ? (
@@ -25,17 +29,35 @@ export default Connect;
 
 function IconOn({ icon }) {
   return (
-    <div
-      className="
-      p-2 flex text-black border-b border-black
-      hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
-      xl:mr-16
-      lg:mr-16
-      md:mr-16
-      "
-      onClick={() => icon.setIconBtn(!icon.iconBtn)}
-    >
-      <p>{`C O N T A C T`}</p>
+    <div className="flex
+    2xl:justify-end
+    xl:justify-end
+    lg:justify-end
+    md:justify-end
+    sm:w-full sm:justify-center sm:items-center
+    ">
+      <div
+        className="flex order-2
+        2xl:mr-10 2xl:text-lg
+        xl:mr-10  xl:text-lg
+        lg:mr-10 lg:text-lg
+        md:mr-10
+        sm:m-0 sm:order-1
+        "
+      >
+        <button
+          className="my-10 p-2 border-b border-black
+          2xl:m-10 2xl:text-lg
+          xl:m-10 xl:text-lg
+          lg:m-10
+          md:m-10 md:ml-0
+          hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
+          "
+          onClick={() => icon.setIconBtn(!icon.iconBtn)}
+        >
+          <span>C O N T A C T</span>
+        </button>
+      </div>
     </div>
   );
 }
@@ -61,72 +83,81 @@ function IconOff({ icon }) {
 
   return (
     <div
-      className="w-full flex
-         xl:w-[15rem] xl:flex-col xl:absolute xl:right-0 xl:top-10
-         lg:w-[15rem] lg:flex-col lg:absolute lg:right-0 lg:top-10
-         md:w-[15rem] md:flex-col md:absolute md:right-0 md:top-10
+      className="flex
+         2xl:w-full 2xl:flex-col
+         xl:w-full xl:flex-col
+         lg:w-full lg:flex-col
+         md:w-full md:flex-col
+         sm:w-full sm:justify-center sm:items-center
          "
     >
+
       <div
         className="
-            xl:h-1/3 xl:my-5 xl:flex xl:justify-end xl:order-2
-            lg:h-1/3 lg:my-5 lg:flex lg:justify-end lg:order-2
-            md:h-1/3 md:my-5 md:flex md:justify-end md:order-2
-            sm:w-1/3 sm:flex sm:justify-center sm:items-center"
+          flex justify-end mr-20 order-1
+          2xl:mr-10
+          xl:mr-10
+          lg:mr-10
+          md:mr-10
+          sm:w-1/3 sm:flex sm:justify-center sm:items-center sm:m-0 sm:order-2
+          "
       >
         <button
-          className="p-2 border-b border-black
+          className="p-2 border-b border-black bg-gray-300
+          2xl:m-10 2xl:mb-0 2xl:text-lg
+          xl:m-10 xl:mb-0 xl:text-lg
+          lg:m-10 lg:mb-0
+          md:m-10 md:mb-0
+          sm:m-0
           hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
-          xl:mr-20 xl:bg-gray-100
-          lg:mr-20 lg:bg-gray-100
-          md:mr-20 md:bg-gray-100
+          "
+          onClick={() => icon.setIconBtn(!icon.iconBtn)}
+        >
+          <span>C L O S E</span>
+        </button>
+      </div>
+
+      <div
+        className="
+        flex justify-end mr-20 order-2
+        sm:w-1/3 sm:flex sm:justify-center sm:items-center sm:m-0 sm:order-1
+        "
+      >
+        <button
+          className="p-2 border-b border-black bg-gray-300
+          2xl:text-lg 2xl:my-5
+          xl:text-lg xl:my-5
+          lg:my-5
+          md:my-3
+          hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
           "
           onClick={handleCopy}
           value={"spaceBacteria@gmail.com"}
           ref={textRef}
         >
-          COPY_E-MAIL
+          <span>COPY_E-MAIL</span>
         </button>
       </div>
 
       <div
         className="
-            xl:h-1/3 xl:flex xl:justify-end xl:mr-20 xl:order-1
-            lg:h-1/3 lg:flex lg:justify-end lg:mr-20 lg:order-1
-            md:h-1/3 md:flex md:justify-end md:mr-20 md:order-1
-            sm:w-1/3 sm:flex sm:justify-center sm:items-center"
-      >
-        <button
-          className="p-2 border-b border-black
-             hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
-             xl:bg-gray-100
-             lg:bg-gray-100
-             md:bg-gray-100
-             "
-          onClick={() => icon.setIconBtn(!icon.iconBtn)}
-        >
-          <p>{`C L O S E`}</p>
-        </button>
-      </div>
-
-      <div
-        className="
-            xl:h-1/3 xl:flex xl:justify-end xl:mr-20 xl:order-3
-            lg:h-1/3 lg:flex lg:justify-end lg:mr-20 lg:order-3
-            md:h-1/3 md:flex md:justify-end md:mr-20 md:order-3
-            sm:w-1/3 sm:flex sm:justify-center sm:items-center"
+        flex justify-end mr-20 order-3
+        sm:w-1/3 sm:flex sm:justify-center sm:items-center sm:m-0 sm:order-3
+          "
       >
         <a
-          className="p-2 border-b border-black
+          className="p-2 border-b border-black bg-gray-300
+          2xl:text-lg
+          xl:text-lg
+          lg:m-0
+          md:mb-0
+          sm:my-10
           hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
-          xl:bg-gray-100
-          lg:bg-gray-100
-          md:bg-gray-100
           "
           href={"https://google.com"}
           target="blank"
         >
-          <p>B L O G</p>
+          <span>B L O G</span>
         </a>
       </div>
 

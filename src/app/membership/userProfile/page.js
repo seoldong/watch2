@@ -1,5 +1,5 @@
 "use client";
-import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ export default function UserProfile() {
   const [userProfile, setUserProfile] = useState("");
   const [originProfile, setOriginProfile] = useState("");
   const [isLogIn, setIsLogIn] = useState(false);
+  const [checkSession, setCheckSession] = useState(false);
 
   useEffect(() => {
     const tokenVerification = async () => {
@@ -17,31 +18,44 @@ export default function UserProfile() {
         const url = "/api/signIn";
         const option = { method: "GET" };
         const checkSession = await fetch(url, option);
-
-        if (checkSession.status === 200) {
-          const userId = await auth.currentUser?.uid;
-          if (userId) {
-            const userId = auth.currentUser.uid;
-            const profileDocRef = doc(db, `appUsers/${userId}/userData/profile`);
-            const profileDocSnapshot = await getDoc(profileDocRef);
-            const userProfileData = profileDocSnapshot.data();
-            setUserProfile(userProfileData);
-            setOriginProfile(userProfileData);
-            setIsLogIn(true);
-          }
-        } else if (checkSession.status === 500) {
-          setIsLogIn(false);
-          alert("Login is required.");
-          signOut(auth);
-          router.push("/signIn");
+        const checkSessionState = await checkSession.status;
+        if (checkSessionState === 200) {
+          setIsLogIn(true);
+          setCheckSession(true);
         }
       } catch (error) {
+        setCheckSession(false);
         console.log(error);
       }
     };
 
     return () => tokenVerification();
   }, [router]);
+
+  useEffect(() => {
+    if (checkSession) {
+      const getUserProfile = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const userId = auth.currentUser.uid;
+          const profileDocRef = doc(db, `appUsers/${userId}/userData/profile`);
+          const profileDocSnapshot = await getDoc(profileDocRef);
+          const userProfileData = profileDocSnapshot.data();
+          setUserProfile(userProfileData);
+          setOriginProfile(userProfileData);
+          setIsLogIn(true);
+        } else {
+          setIsLogIn(false);
+          alert("Login is required.");
+          signOut(auth);
+          router.push("/signIn");
+        }
+      });
+      return () => getUserProfile();
+    } else {
+      console.log("Please sign in"); // 추가 작동 설정필요
+    }
+    
+  }, [checkSession, router])
 
 
   const onSubmitHandler = async (e) => {
@@ -62,7 +76,7 @@ export default function UserProfile() {
       console.log('Please enter text')
     }
   };
-  
+
   const onClickCancelHandler = async (e) => {
     e.preventDefault();
     setUserProfile("originProfile", originProfile);
@@ -91,37 +105,40 @@ export default function UserProfile() {
     setUserProfile({ ...userProfile, photoURL: truncatedValue });
   };
 
-  const onClickRefresh = () => {
-    window.location.reload();
-  }
+  // const onClickRefresh = () => {
+  //   window.location.reload();
+  // }
 
   return (
     <div className="h-full w-full flex-col justify-center item-center">
       <div className="h-[15%] flex flex-col justify-center items-center"></div>
       <div
         className="h-[15%] flex justify-center items-center text-3xl
+        2xl:text-4xl
         xl:text-4xl
         lg:text-4xl
+        md:text-4xl
         sm:text-4xl
        "
       >
         <div className='flex'>
-          <h1>"{userProfile?.displayName}"_profile</h1>
-          <div 
-          className='p-2 ml-10 flex border-b border-black 
+          <h1>{`"${userProfile?.displayName}"_profile`}</h1>
+          {/* <div
+            className='p-2 ml-10 flex border-b border-black 
           xl:text-xl
           lg:text-xl
           md:text-xl
-          sm:text-2xl' 
-          onClick={onClickRefresh}>refresh</div>
+          sm:text-2xl'
+            onClick={onClickRefresh}>refresh</div> */}
         </div>
       </div>
 
       <div className="h-[70%] flex-col 
+          2xl:text-3xl
           xl:text-3xl
           lg:text-3xl
           md:text-2xl
-          sm:text-3xl
+          sm:text-2xl
           ">
         <form
           className="h-1/2 w-full flex-col justify-start"
@@ -177,26 +194,29 @@ export default function UserProfile() {
         <div className="h-1/2 w-full flex justify-center items-start">
           <div className="h-1/3 w-full flex justify-center items-center">
             <button
-              className="p-2 border-b border-black hover:border-none hover:bg-slate-400 hover:text-white
-              xl:mx-10 lg:p-3
+              className="
+              2xl:mx-10
+              xl:mx-10 xl:p-3
               lg:mx-10 lg:p-3
               md:mx-10 md:p-2
               sm:m-10 sm:p-2
               "
               onClick={onSubmitHandler}
             >
-              <p>S A V E</p>
+              <span className='p-2 border-b border-black
+                     hover:border-none hover:bg-slate-400 hover:text-white'>S A V E</span>
             </button>
             <button
-              className="p-2 border-b border-black hover:border-none hover:bg-slate-400 hover:text-white
-              xl:mx-10 xl:p-3
+              className="
+              2xl:mx-10
               lg:mx-10 lg:p-3
               md:mx-10 md:p-2
               sm:m-10 sm:p-2
               "
               onClick={onClickCancelHandler}
             >
-              <p>C A N C E L</p>
+              <span className='p-2 border-b border-black
+                     hover:border-none hover:bg-slate-400 hover:text-white'>C A N C E L</span>
             </button>
           </div>
         </div>

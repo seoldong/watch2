@@ -85,7 +85,11 @@ function GuestDisplayTime({ setBtn }) {
               sm:flex-col
               `}
         >
-          <div className="pb-5 flex justify-end items-center tracking-wide">
+          <div className="pb-5 flex justify-end items-center tracking-wide
+                2xl:pb-0          
+                xl:pb-0
+                sm:text-lg
+                ">
             <p>
               setting time&nbsp;:&nbsp;
               {display && display.setTimeData
@@ -102,11 +106,15 @@ function GuestDisplayTime({ setBtn }) {
           {timeTitle !== "midnight" ? (
             <div
               className="p-5 flex justify-center items-center
+              2xl:mx-5
+              xl:mx-5
               md:p-5
               sm:p-0         
               ">
               <button className="p-2 text-xl border-b border-black cursor-pointer
-                      hover:border-none hover:bg-slate-400 hover:text-white"
+                      hover:border-none hover:bg-slate-400 hover:text-white
+                      sm:p-2 sm:text-lg
+                      "
                       onClick={onClickBtn}
               >
                 S E T T I N G

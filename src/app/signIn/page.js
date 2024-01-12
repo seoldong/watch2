@@ -50,7 +50,10 @@ function SignInPage() {
         <SignInLoading />
       ) : (
         <div className="h-full w-[100%] flex flex-col
+        2xl:text-4xl 2xl:mt-10
+        xl:text-4xl xl:mt-10
         lg:text-3xl
+        md:text-2xl
         sm:text-2xl
         ">
           <button

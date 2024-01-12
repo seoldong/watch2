@@ -40,8 +40,9 @@ function GuestSetGuestTime({ setBtn }) {
   return (
       <div className="h-full flex flex-col">
         <div className='h-1/4'></div>
-        <div className="h-1/4 w-full flex justify-center items-center text-3xl">
-            <div>"{timeTitle}" settings time :&nbsp;</div>
+        <div className="h-1/4 w-full flex justify-center items-center text-3xl
+              2xl:text-4xl">
+            <div>{`"${timeTitle}"`} settings time :&nbsp;</div>
             <div>
               {selectValue !== null
                 ? `${formatTime(settingHours)} :
@@ -54,7 +55,9 @@ function GuestSetGuestTime({ setBtn }) {
           <div className="h-1/4 flex justify-center items-center">
             <div className="w-4/5">
               <input
-                className="w-3/5 mx-2"
+                className="w-3/5 mx-2
+                sm:w-0 sm:mx-0
+                "
                 type="range"
                 min={0}
                 max={24 * 60}
@@ -72,25 +75,29 @@ function GuestSetGuestTime({ setBtn }) {
             <div className=''>
               <button className="cursor-pointer flex justify-center border-b border-black
                       hover:border-none hover:bg-slate-400 hover:text-white font-medium
+                      2xl:m-5 2xl:text-2xl
+                      xl:mx-10
                       lg:mx-10
                       md:mx-10
                       sm:itmes-start sm:mx-5
                       "
                       onClick={(e) => onClickSave(e)}
               >
-                <p className='p-5'>S A V E</p>
+                <p className='p-2'>S A V E</p>
               </button>
             </div>
             <div className=''>
             <button className="cursor-pointer flex justify-center border-b border-black
                       hover:border-none hover:bg-slate-400 hover:text-white font-medium
+                      2xl:m-5 2xl:text-2xl
+                      xl:mx-10
                       lg:mx-10
                       md:mx-10
                       sm:itmes-start sm:mx-5
                       "
                       onClick={(e) => onClickCancel(e)}
               >
-                <p className='p-5'>C A N C E L</p>
+                <p className='p-2'>C A N C E L</p>
               </button>
             </div>
           </div>

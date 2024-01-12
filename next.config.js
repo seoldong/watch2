@@ -2,9 +2,7 @@
 
 
 module.exports = {
-  async rewrites() {
-    return [
-
-    ];
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };

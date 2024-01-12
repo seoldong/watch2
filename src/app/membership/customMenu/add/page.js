@@ -80,6 +80,7 @@ export default function CustomAddPage() {
     <div className="h-full w-full flex-col justify-center item-center">
       <div className="h-[15%] flex flex-col justify-center items-center"></div>
       <div className=" h-[15%] flex justify-center items-center 
+        2xl:text-4xl
         xl:text-4xl
         lg:text-4xl
         md:text-4xl
@@ -91,6 +92,7 @@ export default function CustomAddPage() {
 
       <div
         className="h-[70%] flex-col
+        2xl:text-3xl
         xl:text-3xl
         lg:text-3xl
         md:text-3xl

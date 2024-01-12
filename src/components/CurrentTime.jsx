@@ -69,8 +69,9 @@ export default function CurrentTime() {
   return (
     <button
       className='p-2 flex justify-center items-center cursor-pointer border-b border-black
-      xl:mx-3
-      lg:mx-5'
+      2xl:text-lg
+      xl:text-lg
+      '
       onClick={changeTimeStyle}>
       {displayTime()}
     </button>

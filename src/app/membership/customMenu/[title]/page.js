@@ -13,8 +13,9 @@ function CustomPage() {
   const params = useParams();
   const title = params.title;
 
-  const [settingTime, setSettingTime] = useState(null);
+  const [settingTime, setSettingTime] = useState();
   const [settingBtn, setSettingBtn] = useState(true);
+  console.log('settingTime', settingTime, typeof settingTime);
 
 
   useEffect(() => {
@@ -26,8 +27,8 @@ function CustomPage() {
           const userDataDocCheck = await getDoc(userDataDocRef);
           const timeData = userDataDocCheck.get(title);
 
-          const test = getSetTime(...timeData)
-          setSettingTime(test);
+          const resultsTime = getSetTime(...timeData);
+          setSettingTime(resultsTime);
         }
         checkTimeList();
       }

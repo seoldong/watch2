@@ -22,7 +22,7 @@ function CustomMenuPage() {
       }
     });
     return () => checkSignIn();
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -67,6 +67,7 @@ function CustomMenuPage() {
         <div className="h-1/3 text-2xl flex justify-center
              xl:text-xl
              lg:text-xl
+             sm:text-xl
              "
         >
           <div
@@ -79,7 +80,7 @@ function CustomMenuPage() {
           >
             <div
               className="
-              p-5 flex justify-end items-center tracking-wide
+              p-5 flex justify-end items-center tracking-widest
               "
             >
               <p>setting midnight&nbsp;:&nbsp;00 : 00 : 00</p>

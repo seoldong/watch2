@@ -10,31 +10,23 @@ function NavMenu() {
 
   return (
     <nav
-      className={`absolute top-0 w-screen flex justify-between
-        ${
-          showMenu
-            ? `sm:h-[15%] sm:justify-center`
-            : `sm:h-screen sm:justify-start sm:item-center sm:bg-gray-300`
-        }
-        2xl:flex 2xl:text-2xl
-        xl:flex xl:text-2xl
-        lg:flex lg:text-2xl
-        mdLflex md:text-xl
-        sm:text-2xl sm:flex-col
-        `}
+      className={`absolute top-0 w-full flex
+      2xl:bg-blue-300
+      xl:bg-green-300
+      lg:bg-yellow-300
+      md:bg-orange-300
+      sm:bg-red-300
+      ${showMenu ? `` : `sm:h-screen`}
+      sm:absolute sm:w-full sm:flex sm:flex-col sm:justify-start sm:text-2xl sm:bg-gray-300
+      `}
     >
       <div
-        className={`bg-gray-300
-          ${showMenu ? `h-full` : `h-32`}
-          2xl:hidden
-          xl:hidden
-          lg:hidden
-          md:hidden
+        className={`hidden
           sm:flex sm:justify-center sm:items-center
           `}
       >
         <a
-          className="p-2 m-10 flex justify-center items-center border-b border-black font-medium cursor-pointer
+          className="m-10 p-2 flex justify-center items-center border-b border-black font-medium cursor-pointer
           hover:border-none hover:bg-slate-400 hover:text-white
           "
           onClick={() => setShowMenu(!showMenu)}
@@ -45,40 +37,47 @@ function NavMenu() {
 
       <div
         className={`
-        ${showMenu ? `sm:hidden` : `sm:flex`}
-        xl:w-4/5 xl:flex xl:justify-start xl:items-center
+        2xl:w-4/6 2xl:flex 2xl:justify-start 2xl:items-center
+        xl:w-4/6 xl:flex xl:justify-start xl:items-center
         lg:w-4/6 lg:flex lg:justify-start lg:items-center
-        md:w-4/6 md:flex md:justify-between md:items-center
-        sm:h-full sm:w-full sm:flex-col sm:justify-start
+        md:w-4/6 md:flex md:justify-start md:items-center
+        ${showMenu ? `sm:hidden` : `sm:flex`}
+        sm:w-full sm:flex-col sm:justify-start
         `}
       >
-        <div
-          className={`flex items-center
-          sm:flex-col-reverse
-          `}
+        <div className={`flex items-center
+            sm:flex-col-reverse
+            `}
         >
           <div
-            className={`ml-10
-              hover:border-none hover:bg-slate-400 hover:text-white
-              sm:my-10
-              `}
+            className={`
+            2xl:ml-10
+            xl:ml-10
+            lg:ml-10
+            md:ml-10
+            sm:m-0
+            `}
           >
             <a
-              className="p-2 flex justify-center items-center cursor-pointer border-b border-black
-              xl:m-3
+              className="m-10 p-2 flex justify-center items-center cursor-pointer border-b border-black
+              2xl:text-lg
+              xl:text-lg
+              lg:text-lg
+              hover:border-none hover:bg-slate-400 hover:text-white
               "
               href="/"
               onClick={() => setShowMenu(false)}
             >
-              <p>H O M E</p>
+              <span>H O M E</span>
             </a>
           </div>
 
           <div
-            className={`my-10
-            hover:border-none hover:bg-slate-400 hover:text-white
+            className={`
             lg:hidden
             md:hidden
+            sm:m-10
+            hover:border-none hover:bg-slate-400 hover:text-white
             `}
           >
             <CurrentTime />
@@ -91,12 +90,13 @@ function NavMenu() {
       </div>
 
       <div
-        className={`
-        ${showMenu ? `sm:hidden` : `sm:flex`}
-        xl:w-1/5 xl:flex xl:justify-end xl:items-center
-        lg:w-2/6 lg:flex lg:justify-end lg:items-center
-        md:w-2/6 md:flex md:justify-end md:items-center
-        sm:h-full sm:w-full sm:flex-col sm:justify-end
+        className={`flex justify-end items-center
+        ${showMenu ? `sm:hidden` : ``}
+        2xl:w-2/6
+        xl:w-2/6
+        lg:w-2/6 
+        md:w-2/6
+        sm:w-full sm:bottom-0 sm:absolute
         `}
       >
         <Connect />

@@ -1,20 +1,13 @@
 "use client";
-<<<<<<< HEAD
-=======
-import Link from "next/link";
->>>>>>> a043a55940df2cc01bf95cf536c60c26cb9da8f9
+
 import { useRouter } from "next/navigation";
-import SignOutBtn from "./signOutBtn";
 import { useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../lib/firebase-config";
 import { ShowMenuContext } from "../lib/showMenuContext";
 
-<<<<<<< HEAD
 // sm > nav > signIn 이동 후 깜박임 있음
 
-=======
->>>>>>> a043a55940df2cc01bf95cf536c60c26cb9da8f9
 export default function SignState() {
   const router = useRouter();
   const showCon = useContext(ShowMenuContext);
@@ -34,57 +27,55 @@ export default function SignState() {
     return () => checkSignState();
   }, [router]);
 
+  async function signOutHandler() {
+    try {
+      const url = "/api/signOut";
+      const option = { method: "POST" };
+      const sessionStop = await fetch(url, option);
+      showCon.setShowMenu(true);
+      await signOut(auth);
+      await router.push("/");
+      console.log(showCon);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   function signInState() {
     return (
       <div
-<<<<<<< HEAD
         className={`flex items-center
         sm:flex-col`}
       >
-        <div
-          className={`my-10
-          hover:border-none hover:bg-slate-400 hover:text-white
-          `}
-        >
-          <a className="p-2 flex justify-center items-center cursor-pointer border-b border-black
-            xl:mx-3
-            lg:mx-5"
-             href={"/membership/userProfile"}
-             onClick={() => showCon.setShowMenu(false)}
+        <div>
+          <a
+            className="p-2 flex justify-center items-center ml-10 cursor-pointer border-b border-black
+            2xl:ml-10 2xl:text-lg
+            xl:text-lg
+            lg:mx-5 lg:text-xl
+            sm:m-10
+            hover:border-none hover:bg-slate-400 hover:text-white
+            "
+            href={"/membership/userProfile"}
+            onClick={() => showCon.setShowMenu(false)}
           >
-            <p>P R O F I L E</p>
+            <span>P R O F I L E</span>
           </a>
         </div>
 
-        <div
-          className="my-10
-          hover:border-none hover:bg-slate-400 hover:text-white
-          "
-=======
-        className="flex items-center text-gray-700
-      sm:flex-col sm:items-center sm:justify-center sm:text-white
-      "
-      >
-        <a
-          className="mr-10 p-2 border-b border-black hover:border-none hover:bg-slate-400 hover:text-white font-medium cursor-pointer
-          md:mr-5
-          sm:border-white sm:m-10
-          "
-          href={"/membership/userProfile"}
-          onClick={() => showCon.setShowMenu(false)}
-        >
-          <p>P R O F I L E</p>
-        </a>
-
-        <div
-          className="mr-20 p-2 border-b border-black hover:border-none hover:bg-slate-400 hover:text-white font-medium cursor-pointer
-        md:mr-10
-        sm:border-white sm:m-10
-        "
-          onClick={() => showCon.setShowMenu(false)}
->>>>>>> a043a55940df2cc01bf95cf536c60c26cb9da8f9
-        >
-          <SignOutBtn />
+        <div className={`sm:my-10`}>
+          <a
+            className="p-2 flex justify-center items-center ml-10 cursor-pointer border-b border-black
+            2xl:ml-10 2xl:text-lg
+            xl:text-lg
+            lg:mx-5 lg:text-xl
+            sm:m-10
+            hover:border-none hover:bg-slate-400 hover:text-white
+            "
+            onClick={() => signOutHandler()}
+          >
+            <span>S I G N O U T</span>
+          </a>
         </div>
       </div>
     );
@@ -92,41 +83,21 @@ export default function SignState() {
 
   function signOutState() {
     return (
-      <div
-<<<<<<< HEAD
-        className={`flex items-center
-            sm:flex-col`}
-      >
-        <div
-          className={`my-10
-              hover:border-none hover:bg-slate-400 hover:text-white
-              `}
-        >
-          <a
-            className="p-2 flex justify-center items-center cursor-pointer border-b border-black
-            lg:mx-5"
-            href={"/signIn"}
-            onClick={() => showCon.setShowMenu(false)}
-          >
-            <p>S I G N I N</p>
-          </a>
-        </div>
-=======
-        className="flex items-center text-gray-700
-      sm:flex-col sm:items-center sm:justify-center sm:text-white
-      "
-      >
+      <div className="flex justify-center items-center">
         <a
-          className="mr-20 p-2 border-b border-black hover:border-none hover:bg-slate-400 hover:text-white font-medium cursor-pointer
-          md:mr-10
-          sm:border-white sm:m-10
-          "
-          href="/signIn"
+          className="p-2 flex justify-center items-center ml-10 cursor-pointer border-b border-black
+            2xl:ml-10 2xl:text-xl
+            xl:text-xl
+            lg:mx-5 lg:text-xl
+            md:m-0
+            sm:m-10
+            hover:border-none hover:bg-slate-400 hover:text-white
+            "
+          href={"/signIn"}
           onClick={() => showCon.setShowMenu(false)}
         >
-          <p>S I G N I N</p>
+          <span>S I G N I N</span>
         </a>
->>>>>>> a043a55940df2cc01bf95cf536c60c26cb9da8f9
       </div>
     );
   }

@@ -52,31 +52,33 @@ export default function HomePage() {
       {/*  */}
 
       <div className="h-1/2 w-full pt-5 flex flex-col items-center">
-        <div className="w-4/6 flex underline underline-offset-8 decoration-0 leading-10 flex-wrap
+        <div className="w-5/6 flex flex-wrap
+          2xl:w-5/6 2xl:flex-wrap 2xl:justify-between 2xl:items-center 2xl:text-xl
+          xl:w-5/6 xl:flex-wrap xl:justify-between xl:items-center xl:text-lg
           lg:w-5/6 lg:flex-wrap lg:justify-between lg:items-center
-          md:w-5/6 md:flex-wrap md:justify-between md:items-center text-sm
-          sm:w-5/6 sm:flex-wrap sm:justify-between sm:items-center
+          md:w-5/6 md:flex-wrap md:justify-between md:items-center md:text-lg
+          sm:w-5/6 sm:flex-wrap sm:justify-between sm:items-center sm:text-lg
           "
         >
           <div className="m-3 flex justify-center items-center border
-            2xl:h-[11rem] 2xl:w-[11rem]
-            xl:h-[10rem] xl:w-[10rem] xl:m-1
+            2xl:h-[14rem] 2xl:w-[14rem]
+            xl:h-[12rem] xl:w-[12rem] xl:m-0
             lg:h-[10rem] lg:w-[10rem] lg:m-1
             md:h-[9rem] md:w-[9rem] md:m-2
             sm:h-[10rem] sm:w-[10rem] sm:m-2
             "
           >
-            <button className="h-full w-full p-2 border border-slate-400 
+            <button className="h-full w-full p-2 border border-slate-400
                     hover:border-none hover:bg-slate-400 hover:text-white"
                     onClick={() => setTimeTitle("midnight")}
             >
-              <p>M I D N I G H T</p>
+              <span className='p-2 border-b border-black tracking-widest'>MIDNIGHT</span>
             </button>
           </div>
 
           <div className="m-3 flex justify-center items-center border
-            2xl:h-[11rem] 2xl:w-[11rem]
-            xl:h-[10rem] xl:w-[10rem] xl:m-1
+            2xl:h-[14rem] 2xl:w-[14rem]
+            xl:h-[12rem] xl:w-[12rem] xl:m-0
             lg:h-[10rem] lg:w-[10rem] lg:m-1
             md:h-[9rem] md:w-[9rem] md:m-2
             sm:h-[10rem] sm:w-[10rem] sm:m-2
@@ -87,13 +89,13 @@ export default function HomePage() {
               hover:border-none hover:bg-slate-400 hover:text-white"
               onClick={() => setTimeTitle("sleep")}
             >
-              <p>S L E E P</p>
+              <span className='p-2 border-b border-black tracking-widest'>SLEEP</span>
             </button>
           </div>
 
           <div className="m-3 flex justify-center items-center border
-            2xl:h-[11rem] 2xl:w-[11rem]
-            xl:h-[10rem] xl:w-[10rem] xl:m-1
+            2xl:h-[14rem] 2xl:w-[14rem]
+            xl:h-[12rem] xl:w-[12rem] xl:m-0
             lg:h-[10rem] lg:w-[10rem] lg:m-1
             md:h-[9rem] md:w-[9rem] md:m-2
             sm:h-[10rem] sm:w-[10rem] sm:m-2
@@ -104,13 +106,13 @@ export default function HomePage() {
               hover:border-none hover:bg-slate-400 hover:text-white"
               onClick={() => setTimeTitle("breakfast")}
             >
-              <p>B R E A K F A S T</p>
+              <span className='p-2 border-b border-black tracking-widest'>BREAKFAST</span>
             </button>
           </div>
 
           <div className="m-3 flex justify-center items-center border
-            2xl:h-[11rem] 2xl:w-[11rem]
-            xl:h-[10rem] xl:w-[10rem] xl:m-1
+            2xl:h-[14rem] 2xl:w-[14rem]
+            xl:h-[12rem] xl:w-[12rem] xl:m-0
             lg:h-[10rem] lg:w-[10rem] lg:m-1
             md:h-[9rem] md:w-[9rem] md:m-2
             sm:h-[10rem] sm:w-[10rem] sm:m-2
@@ -121,13 +123,13 @@ export default function HomePage() {
               hover:border-none hover:bg-slate-400 hover:text-white"
               onClick={() => setTimeTitle("lunch")}
             >
-              <p>L U N C H</p>
+              <span className='p-2 border-b border-black tracking-widest'>LUNCH</span>
             </button>
           </div>
 
           <div className="m-3 flex justify-center items-center border
-            2xl:h-[11rem] 2xl:w-[11rem]
-            xl:h-[10rem] xl:w-[10rem] xl:m-1
+            2xl:h-[14rem] 2xl:w-[14rem]
+            xl:h-[12rem] xl:w-[12rem] xl:m-0
             lg:h-[10rem] lg:w-[10rem] lg:m-1
             md:h-[9rem] md:w-[9rem] md:m-2
             sm:h-[10rem] sm:w-[10rem] sm:m-2
@@ -138,7 +140,7 @@ export default function HomePage() {
               hover:border-none hover:bg-slate-400 hover:text-white"
               onClick={() => setTimeTitle("dinner")}
             >
-              <p>D I N N E R</p>
+              <span className='p-2 border-b border-black tracking-widest'>DINNER</span>
             </button>
           </div>
           

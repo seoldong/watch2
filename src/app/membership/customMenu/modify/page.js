@@ -11,34 +11,42 @@ function CustomMenuModifyPage({ timeSet, setBtn }) {
   const title = params.title;
   const formatTime = (value) => String(value).padStart(2, "0");
 
-  const [selectValue, setSelectValue] = useState(null);
+  const [selectValue, setSelectValue] = useState(Number(0));
 
   useEffect(() => {
-    let initTimeRangeValue = null;
-    if (timeSet.settingTime !== null) {
+    let initTimeRangeValue = 0;
+  
+    if (timeSet && timeSet.settingTime) {
       initTimeRangeValue =
         timeSet.settingTime.getHours() * 60 + timeSet.settingTime.getMinutes();
     }
     setSelectValue(initTimeRangeValue);
-  }, [timeSet.settingTime]);
+  }, [timeSet]);
+  
+
 
   function onClickSave(e) {
-    const timeObj = timeData(selectValue);
-    const settings = [0, timeObj.hours, timeObj.minutes, 0, 0];
-    const newTimeSet = getSetTime(...settings);
-    timeSet.setSettingTime(newTimeSet);
-    setBtn.setSettingBtn(!setBtn.settingBtn);
 
-    const updateSleepTime = async (set) => {
-      const newTimeData = {
-        [title]: set,
+    if (selectValue) {
+      const timeObj = timeData(selectValue);
+      const settings = [0, timeObj.hours, timeObj.minutes, 0, 0];
+      const newTimeSet = getSetTime(...settings);
+
+      timeSet.setSettingTime(newTimeSet);
+      setBtn.setSettingBtn(!setBtn.settingBtn);
+
+      const updateSleepTime = async (set) => {
+        const newTimeData = {
+          [title]: set,
+        };
+        const uid = auth.currentUser.uid;
+        const timePath = `appUsers/${uid}/userData/timeList`;
+        const docRef = doc(db, timePath);
+        const update = await updateDoc(docRef, newTimeData);
       };
-      const uid = auth.currentUser.uid;
-      const timePath = `appUsers/${uid}/userData/timeList`;
-      const docRef = doc(db, timePath);
-      const update = await updateDoc(docRef, newTimeData);
-    };
-    updateSleepTime(settings);
+      updateSleepTime(settings);
+    }
+
   }
 
   function onClickCancel(e) {
@@ -52,23 +60,28 @@ function CustomMenuModifyPage({ timeSet, setBtn }) {
     router.push(`/`);
   }
 
-  let timeDataObj = timeData(selectValue);
+  let timeDataObj
+  if (selectValue) {
+    timeDataObj = timeData(selectValue)
+  };
 
   return (
     <div className="h-full w-full flex-col justify-center item-center">
       <div className="h-[15%] flex flex-col justify-center items-center"></div>
       <div className=" h-[15%] flex justify-center items-center text-3xl
+        2xl:text-4xl
         xl:text-4xl
         lg:text-4xl
         md:text-4xl
         sm:text-4xl
         "
       >
-        <p>"{title}"_modify_setting</p>
+        <p>{`"${title}"_modify_setting`}</p>
       </div>
 
       <div
         className="h-[70%] flex-col
+          2xl:text-2xl
           xl:text-2xl
           lg:text-2xl
           md:text-2xl
@@ -82,15 +95,15 @@ function CustomMenuModifyPage({ timeSet, setBtn }) {
             <div className="h-[3rem] w-2/6 flex justify-end items-center">
               <p>{`C U R R E N T : `}</p>
             </div>
-            <p 
-            className="h-[3rem] w-2/6 mr-30 px-2 flex justify-center items-center outline-none border-b border-black focus:border-black
+            <p
+              className="h-[3rem] w-2/6 mr-30 px-2 flex justify-center items-center outline-none border-b border-black focus:border-black
+            2xl:text-3xl
             xl:text-3xl
             lg:text-3xl
             "
             >
-              {selectValue !== null
-                ? `${formatTime(timeSet.settingTime.getHours())} :
-                          ${formatTime(timeSet.settingTime.getMinutes())}`
+              {selectValue
+                ? `${formatTime(timeSet.settingTime.getHours())} : ${formatTime(timeSet.settingTime.getMinutes())}`
                 : `loading...`}
             </p>
           </div>
@@ -100,20 +113,21 @@ function CustomMenuModifyPage({ timeSet, setBtn }) {
               <p>{`S E T T I N G S : `}</p>
             </div>
             <p
-            className="h-[3rem] w-2/6 mr-30 px-2 flex justify-center items-center outline-none border-b border-black focus:border-black
+              className="h-[3rem] w-2/6 mr-30 px-2 flex justify-center items-center outline-none border-b border-black focus:border-black
+            2xl:text-3xl
             xl:text-3xl
             lg:text-3xl
             "
             >
-              {selectValue !== null
-                ? `${formatTime(timeDataObj.hours)} :
-                          ${formatTime(timeDataObj.minutes)}`
+              {selectValue
+                ? `${formatTime(timeDataObj.hours)} : ${formatTime(timeDataObj.minutes)}`
                 : `loading...`}
             </p>
           </div>
 
           <div className="
               h-1/4 py-10 px-20 
+              2xl:px-40
               xl:px-40
               ">
             <input
@@ -121,8 +135,8 @@ function CustomMenuModifyPage({ timeSet, setBtn }) {
               min={0}
               max={23.5 * 60}
               step={30}
-              value={selectValue !== null && selectValue}
-              onChange={(e) => setSelectValue(e.target.value)}
+              value={selectValue}
+              onChange={(e) => setSelectValue(Number(e.target.value))}
             />
           </div>
         </div>

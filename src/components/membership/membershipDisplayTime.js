@@ -48,6 +48,7 @@ function MembershipDisplayTime({ timeSet, setBtn }) {
             className={`
             border-b border-black
             hover:border-none hover:bg-slate-400 hover:text-white cursor-pointer
+            2xl:text-4xl
             xl:text-4xl
             lg:text-4xl
             md:text-4xl
