@@ -7,7 +7,7 @@ import { deleteField, doc, updateDoc } from "firebase/firestore";
 
 function CustomMenuModifyPage({ timeSet, setBtn }) {
   const router = useRouter();
-  const params = useParams();
+  const params = useParams<{title: string}>();
   const title = params.title;
   const formatTime = (value) => String(value).padStart(2, "0");
 
@@ -30,7 +30,7 @@ function CustomMenuModifyPage({ timeSet, setBtn }) {
     if (selectValue) {
       const timeObj = timeData(selectValue);
       const settings = [0, timeObj.hours, timeObj.minutes, 0, 0];
-      const newTimeSet = getSetTime(...settings);
+      const newTimeSet = getSetTime(...settings as [number, number, number, number, number]);
 
       timeSet.setSettingTime(newTimeSet);
       setBtn.setSettingBtn(!setBtn.settingBtn);
