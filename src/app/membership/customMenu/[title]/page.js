@@ -13,9 +13,8 @@ function CustomPage() {
   const params = useParams();
   const title = params.title;
 
-  const [settingTime, setSettingTime] = useState();
+  const [settingTime, setSettingTime] = useState(null);
   const [settingBtn, setSettingBtn] = useState(true);
-  console.log('settingTime', settingTime, typeof settingTime);
 
 
   useEffect(() => {
