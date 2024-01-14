@@ -21,17 +21,12 @@ const CustomPage: React.FC = () => {
       if (user) {
         const checkTimeList = async () => {
           const userId = user.uid;
-          const userDataDocRef = doc(
-            db,
-            `appUsers/${userId}/userData/timeList`
-          );
+          const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
           const userDataDocCheck = await getDoc(userDataDocRef);
           const timeData = userDataDocCheck.get(title);
 
           if (timeData) {
-            const resultsTime: Date = getSetTime(
-              ...(timeData as [number, number, number, number, number])
-            );
+            const resultsTime: Date = getSetTime(...(timeData as [number, number, number, number, number]));
             setSettingTime(resultsTime);
           }
         };
@@ -42,9 +37,7 @@ const CustomPage: React.FC = () => {
       }
     });
 
-    return () => {
-      observUser();
-    };
+    return () => {observUser()};
   }, [title]);
 
   return (
