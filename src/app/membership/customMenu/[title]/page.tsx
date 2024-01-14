@@ -10,11 +10,11 @@ import CustomMenuModifyPage from '../modify/page'
 
 
 function CustomPage() {
-  const params = useParams();
+  const params = useParams<{title:string}>();
   const title = params.title;
 
-  const [settingTime, setSettingTime] = useState(null);
-  const [settingBtn, setSettingBtn] = useState(true);
+  const [settingTime, setSettingTime] = useState<Date>(new Date());
+  const [settingBtn, setSettingBtn] = useState<boolean>(true);
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function CustomPage() {
           const userDataDocCheck = await getDoc(userDataDocRef);
           const timeData = userDataDocCheck.get(title);
 
-          const resultsTime = getSetTime(...timeData);
+          const resultsTime:Date = getSetTime(...(timeData as [number, number, number, number, number]));
           setSettingTime(resultsTime);
         }
         checkTimeList();
@@ -50,8 +50,7 @@ function CustomPage() {
         <CustomMenuModifyPage
           timeSet={{ settingTime, setSettingTime }}
           setBtn={{ settingBtn, setSettingBtn }}
-          rangeMin={0}
-          rangeMax={(24) * 60} />}
+        />}
     </>
   )
 }

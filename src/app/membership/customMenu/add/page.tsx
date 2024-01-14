@@ -6,7 +6,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../../lib/firebase-config";
 
 export default function CustomAddPage() {
-  const params = useParams();
+  const params = useParams<{title:string}>();
   const title = params.title;
   const router = useRouter();
   const formatTime = (value) => String(value).padStart(2, "0");
@@ -20,10 +20,7 @@ export default function CustomAddPage() {
       if (user) {
         const checkList = async () => {
           const userId = user.uid;
-          const userDataDocRef = doc(
-            db,
-            `appUsers/${userId}/userData/timeList`
-          );
+          const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
           const userTimeList = (await getDoc(userDataDocRef)).data();
           const userTimeTitleList = Object.keys(userTimeList);
           setTimeTitleList(userTimeTitleList);
@@ -149,7 +146,7 @@ export default function CustomAddPage() {
                 max={23.5 * 60}
                 step={30}
                 value={selectedTime}
-                onChange={(e) => setSelectTime(e.target.value)}
+                onChange={(e) => setSelectTime( Number(e.target.value) )}
               />
             </div>
           </div>

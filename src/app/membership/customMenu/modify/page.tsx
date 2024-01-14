@@ -8,6 +8,8 @@ import { deleteField, doc, updateDoc } from "firebase/firestore";
 function CustomMenuModifyPage({ timeSet, setBtn }) {
   const router = useRouter();
   const params = useParams<{title: string}>();
+  console.log("params", params);
+  
   const title = params.title;
   const formatTime = (value) => String(value).padStart(2, "0");
 
