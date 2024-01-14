@@ -3,10 +3,26 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getRemainingTime, getSetTime } from "../../logic/getTime";
 import Control from "../Control";
+import { Dispatch, SetStateAction } from "react";
 
-function MembershipDisplayTime({ timeSet, setBtn }) {
-  const parpam = useParams();
-  const title = parpam.title;
+interface TimeSet {
+  settingTime: Date;
+  setSettingTime: Dispatch<SetStateAction<Date>>;
+}
+
+interface SetBtn {
+  settingBtn: boolean;
+  setSettingBtn: Dispatch<SetStateAction<boolean>>;
+}
+
+interface MembershipDisplayTime {
+  timeSet: TimeSet;
+  setBtn: SetBtn;
+}
+
+const MembershipDisplayTime: React.FC<MembershipDisplayTime> = ({ timeSet, setBtn }) => {
+  const params = useParams<{title: string}>();
+  const title = params.title;
   const formatTime = (value) => String(value).padStart(2, "0");
 
   const [display, setDisplay] = useState(null);

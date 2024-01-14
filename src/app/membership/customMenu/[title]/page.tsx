@@ -8,17 +8,8 @@ import { getSetTime } from "../../../../logic/getTime";
 import MembershipDisplayTime from "../../../../components/membership/membershipDisplayTime";
 import CustomMenuModifyPage from "../modify/page";
 
-interface TimeSet {
-  settingTime: Date;
-  setSettingTime: React.Dispatch<React.SetStateAction<Date>>;
-}
 
-interface SetBtn {
-  settingBtn: boolean;
-  setSettingBtn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-function CustomPage() {
+const CustomPage: React.FC = () => {
   const params = useParams<{ title: string | undefined }>();
   const title = params.title;
 

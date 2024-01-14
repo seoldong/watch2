@@ -22,7 +22,7 @@ interface CustomMenuModifyPageProps {
 }
 
 
-const CustomMenuModifyPage = ({ timeSet, setBtn }: CustomMenuModifyPageProps) => {
+const CustomMenuModifyPage: React.FC<CustomMenuModifyPageProps> = ({ timeSet, setBtn }) => {
   const router = useRouter();
   const params = useParams<{title: string}>();
   console.log("params", params);

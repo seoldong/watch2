@@ -6,9 +6,9 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../../lib/firebase-config";
 import { onAuthStateChanged } from 'firebase/auth';
 
-function CustomAddPage() {
+const CustomAddPage = () => {
   const params = useParams<{ title: string | undefined }>();
-  const title = params.title;
+  const title = params?.title;
   const router = useRouter();
   const formatTime = (value: number): string => String(value).padStart(2, "0");
 
