@@ -4,19 +4,20 @@ import { timeData } from "../../../../logic/getTime";
 import { useParams, useRouter } from "next/navigation";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../../lib/firebase-config";
+import { onAuthStateChanged } from 'firebase/auth';
 
-export default function CustomAddPage() {
-  const params = useParams<{title:string}>();
+function CustomAddPage() {
+  const params = useParams<{ title: string | undefined }>();
   const title = params.title;
   const router = useRouter();
-  const formatTime = (value) => String(value).padStart(2, "0");
+  const formatTime = (value: number): string => String(value).padStart(2, "0");
 
   const [timeTitle, setTimeTitle] = useState("");
   const [selectedTime, setSelectTime] = useState(0);
-  const [timeTitleList, setTimeTitleList] = useState([]);
+  const [timeTitleList, setTimeTitleList] = useState<string[]>([]);
 
   useEffect(() => {
-    const observUser = auth.onAuthStateChanged((user) => {
+    const observUser = onAuthStateChanged(auth, (user) => {
       if (user) {
         const checkList = async () => {
           const userId = user.uid;
@@ -174,3 +175,5 @@ export default function CustomAddPage() {
     </div>
   );
 }
+
+export default CustomAddPage;

@@ -6,19 +6,26 @@ import { useRouter } from "next/navigation";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../../lib/firebase-config";
 
+interface remainingDate {
+  rtHours: number;
+  rtMinutes: number;
+  rtSeconds: number;
+  setTimeData: Date;
+}
+
 function CustomMenuPage() {
   const router = useRouter();
-  const formatTime = (value) => String(value).padStart(2, "0");
+  const formatTime = (value: number): string => String(value).padStart(2, "0");
 
-  const [tomorrowMid, setTime] = useState(null);
-  const [toggle, setToggle] = useState(false);
+  const [tomorrowMid, setTomorrowMid] = useState<remainingDate | undefined>();
+  const [toggle, setToggle] = useState<boolean>(false);
 
   useEffect(() => {
     const checkSignIn = onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        console.log("membership > custommenu : no signIn");
+        console.log("membership > custommenu : no signIn and push to /");
         await signOut(auth);
-        await router.push("/");
+        router.push("/");
       }
     });
     return () => checkSignIn();
@@ -28,8 +35,8 @@ function CustomMenuPage() {
     const timer = setInterval(() => {
       const currentTime = new Date();
       const tomorrowMid = getSetTime(1, 0, 0, 0, 0);
-      const remainingTime = getRemainingTime(tomorrowMid, currentTime);
-      setTime(remainingTime);
+      const remainingTime:remainingDate = getRemainingTime(tomorrowMid, currentTime);
+      setTomorrowMid(remainingTime);
     }, 1000);
     return () => {
       clearInterval(timer);

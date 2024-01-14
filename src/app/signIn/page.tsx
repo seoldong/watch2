@@ -1,10 +1,5 @@
 "use client";
-import {
-  getRedirectResult,
-  onAuthStateChanged,
-  signInWithPopup,
-  signInWithRedirect,
-} from "firebase/auth";
+import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { auth, provider } from "../../lib/firebase-config";
@@ -35,7 +30,10 @@ function SignInPage() {
       .catch((error) => {
         console.log(error);
       });
-    return () => tokenGenerationAndRouter;
+
+    return () => {
+      tokenGenerationAndRouter;
+    };
   }, [router]);
 
   function googleSigninBtn(e) {
@@ -49,17 +47,19 @@ function SignInPage() {
       {loading ? (
         <SignInLoading />
       ) : (
-        <div className="h-full w-[100%] flex flex-col
+        <div
+          className="h-full w-[100%] flex flex-col
         2xl:text-4xl 2xl:mt-10
         xl:text-4xl xl:mt-10
         lg:text-3xl
         md:text-2xl
         sm:text-2xl
-        ">
+        "
+        >
           <button
             className="my-5 p-2 cursor-pointer border-b border-black 
             hover:border-none hover:bg-slate-400 hover:text-white font-medium
-            lg:p-5" 
+            lg:p-5"
             onClick={(e) => googleSigninBtn(e)}
           >
             G O O G L E

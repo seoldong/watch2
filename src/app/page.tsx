@@ -7,6 +7,7 @@ import GuestSetGuestTime from "../components/guest/guestSetGuestTime";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase-config";
 
+
 export default function HomePage() {
   const router = useRouter();
 
@@ -20,7 +21,7 @@ export default function HomePage() {
 
   const [timeTitle, setTimeTitle] = useState("midnight");
   const [timeList, setTimeList] = useState(initTimeList);
-  const [settingBtn, setSettingBtn] = useState(true);
+  const [settingBtn, setSettingBtn] = useState<boolean>(true);
 
   useEffect(() => {
     const checkSignState = onAuthStateChanged(auth, (user) => {

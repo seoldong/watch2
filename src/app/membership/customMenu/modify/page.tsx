@@ -4,8 +4,25 @@ import { getSetTime, timeData } from "../../../../logic/getTime";
 import { useParams, useRouter } from "next/navigation";
 import { auth, db } from "../../../../lib/firebase-config";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
+import { Dispatch, SetStateAction } from "react";
 
-function CustomMenuModifyPage({ timeSet, setBtn }) {
+interface TimeSet {
+  settingTime: Date;
+  setSettingTime: Dispatch<SetStateAction<Date>>;
+}
+
+interface SetBtn {
+  settingBtn: boolean;
+  setSettingBtn: Dispatch<SetStateAction<boolean>>;
+}
+
+interface CustomMenuModifyPageProps {
+  timeSet: TimeSet;
+  setBtn: SetBtn;
+}
+
+
+const CustomMenuModifyPage = ({ timeSet, setBtn }: CustomMenuModifyPageProps) => {
   const router = useRouter();
   const params = useParams<{title: string}>();
   console.log("params", params);
