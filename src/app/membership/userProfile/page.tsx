@@ -9,6 +9,7 @@ import { DocumentData, collection, doc, getDoc, setDoc, updateDoc } from "fireba
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../lib/firebase-config";
+import { customInitApp } from '../../../lib/firebase-admin-config';
 
 interface Profile {
   displayName: string;

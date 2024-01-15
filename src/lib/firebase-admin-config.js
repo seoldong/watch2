@@ -21,3 +21,6 @@ export function customInitApp() {
         initializeApp(firebaseAdminConfig);
     }
 }
+
+customInitApp();
+
