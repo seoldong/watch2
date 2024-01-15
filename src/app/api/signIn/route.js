@@ -1,9 +1,9 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers'
 import { auth } from 'firebase-admin';
 
 
-async function POST(request, response) {
+async function POST() {
   const authorization = await headers().get('Authorization');
 
   if (authorization?.startsWith("Bearer ")) {
@@ -18,7 +18,8 @@ async function POST(request, response) {
         value: sessionCookie,
         maxAge: expiresIn,
         httpOnly: true,
-        secure: true,
+        // secure: true,
+        secure: process.env.NODE_ENV === 'production',
       }
       cookies().set(options);
     }
@@ -31,7 +32,6 @@ async function POST(request, response) {
 
 async function GET(request, response) {
   const session = cookies().get("session")?.value || "";
-  // console.log('api get session', session);
 
     if (!session) {
       console.log('api get err 01');

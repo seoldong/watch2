@@ -10,10 +10,11 @@ function SignInPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    const tokenGenerationAndRouter = getRedirectResult(auth)
-      .then(async (userCred) => {
-        if (!userCred) {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const userCred = await getRedirectResult(auth);
+        if(!userCred){
           setLoading(false);
           return;
         }
@@ -26,19 +27,20 @@ function SignInPage() {
         const response = await fetch(url, option);
         setLoading(false);
         router.push("/membership/customMenu");
-      })
-      .catch((error) => {
+      }
+      catch (error) {
         console.log(error);
-      });
-
-    return () => {
-      tokenGenerationAndRouter;
+      }
     };
+
+    fetchData();
+
+    return () => {};
   }, [router]);
 
   function googleSigninBtn(e) {
     e.preventDefault();
-    setLoading(false);
+    setLoading(true);
     signInWithRedirect(auth, provider);
   }
 
