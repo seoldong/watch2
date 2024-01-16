@@ -29,9 +29,9 @@ export async function middleware(request, response) {
   }
 
   if (pathname === "/membership/userProfile") {
-    if (!session) {
-      return await NextResponse.redirect(new URL("/signIn", request.url));
-    }
+    // if (!session) {
+    //   return await NextResponse.redirect(new URL("/signIn", request.url));
+    // }
 
     const url = "http://localhost:3000/api/signIn";
     const option = {
@@ -40,9 +40,9 @@ export async function middleware(request, response) {
     };
     const responseAPI = await fetch(url, option);
 
-    if ((await responseAPI.status) !== 200) {
-      return await NextResponse.redirect(new URL("/signIn", request.url));
-    }
+    // if ((await responseAPI.status) !== 200) {
+    //   return await NextResponse.redirect(new URL("/signIn", request.url));
+    // }
     return NextResponse.next();
   }
 }
