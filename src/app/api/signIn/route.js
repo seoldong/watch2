@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers'
 import { auth } from 'firebase-admin';
+import { customInitApp } from '../../../lib/firebase-admin-config';
+
 
 
 async function POST() {
+
   const authorization = await headers().get('Authorization');
 
   if (authorization?.startsWith("Bearer ")) {
@@ -31,6 +34,7 @@ async function POST() {
 
 
 async function GET(request, response) {
+
   const session = cookies().get("session")?.value || "";
 
     if (!session) {

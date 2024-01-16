@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/app/membership/customMenu/modify/page.js", "src/app/membership/customMenu/modify/page.js", "src/app/membership/customMenu/modify/page.js", "src/app/membership/customMenu/modify/page.js"  ],
+, "src/app/membership/customMenu/modify/page.js", "src/app/membership/customMenu/modify/page.js", "src/app/membership/customMenu/modify/page.js", "src/app/membership/customMenu/modify/page.js", "src/app/api/signIn/route.js"  ],
   "exclude": [
     "node_modules"
   ]

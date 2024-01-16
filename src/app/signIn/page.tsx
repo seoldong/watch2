@@ -27,9 +27,9 @@ function SignInPage() {
         const response = await fetch(url, option);
         setLoading(false);
         router.push("/membership/customMenu");
-      }
+      } 
       catch (error) {
-        console.log(error);
+        console.error('Error during data fetching:', error);
       }
     };
 

@@ -1,7 +1,6 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 
 const firebaseAdminConfig = {
-    credential: cert({
         type: process.env.TYPE,
         project_id: process.env.PROJECT_ID,
         private_key_id: process.env.PRIVATE_KEY_ID,
@@ -13,14 +12,13 @@ const firebaseAdminConfig = {
         auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
         client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
         universe_domain: process.env.UNIVERSE_DOMAIN,
-    })
 };
 
 export function customInitApp() {
     if (getApps().length <= 0) {
-        initializeApp(firebaseAdminConfig);
+      initializeApp({
+        credential: cert(firebaseAdminConfig),
+      });
     }
-}
-
-customInitApp();
+  }
 
