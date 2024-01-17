@@ -4,8 +4,9 @@ import { auth } from 'firebase-admin';
 import { customInitApp } from '../../../lib/firebase-admin-config';
 
 
+customInitApp();
 
-async function POST() {
+export async function POST() {
 
   const authorization = await headers().get('Authorization');
 
@@ -33,7 +34,7 @@ async function POST() {
 }
 
 
-async function GET(request, response) {
+export async function GET(req, res) {
 
   const session = cookies().get("session")?.value || "";
 
@@ -52,4 +53,4 @@ async function GET(request, response) {
     return NextResponse.json({ isLogged: true }, { status: 200 });
 }
 
-module.exports = { POST, GET }
+// module.exports = { POST, GET }

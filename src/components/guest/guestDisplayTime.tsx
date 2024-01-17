@@ -5,11 +5,11 @@ import { getRemainingTime, getSetTime, timeData } from "../../logic/getTime";
 import { TimeContext } from "../../lib/guestContext";
 
 
-function GuestDisplayTime({ setBtn }) {
-  const timeCon = useContext(TimeContext);
-  const timeTitle = timeCon.timeTitle;
-  const timeArr = timeCon.timeList[timeTitle];
-  const setTingTime = getSetTime(...timeArr);
+function GuestDisplayTime() {
+  const timeContext = useContext(TimeContext);
+  const timeTitle = timeContext.timeTitle;
+  const timeArr = timeContext.timeList[timeTitle];
+  const setTingTime = getSetTime(...timeArr as [number, number, number, number, number]);
   const formatTime = (value) => String(value).padStart(2, "0");
 
   const [display, setDisplay] = useState(null);
@@ -18,7 +18,7 @@ function GuestDisplayTime({ setBtn }) {
   useEffect(() => {
     const timer = setInterval(() => {
       const currentTime = new Date();
-      let selectedTime = getSetTime(...timeCon.timeList[timeTitle]);
+      let selectedTime = getSetTime(...timeContext.timeList[timeTitle] as [number, number, number, number, number]);
       if (selectedTime && currentTime.getHours() >= selectedTime.getHours()) {
         selectedTime = getSetTime(
           1,
@@ -34,10 +34,10 @@ function GuestDisplayTime({ setBtn }) {
     return () => {
       clearInterval(timer);
     };
-  }, [timeCon.timeList, timeTitle]);
+  }, [timeContext.timeList, timeTitle]);
 
   function onClickBtn() {
-    setBtn.setSettingBtn(!setBtn.settingBtn);
+    timeContext.setSettingBtn(!timeContext.settingBtn);
   }
 
   let month = setTingTime.getMonth() + 1;

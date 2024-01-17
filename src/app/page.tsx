@@ -23,29 +23,27 @@ export default function HomePage() {
   const [timeList, setTimeList] = useState(initTimeList);
   const [settingBtn, setSettingBtn] = useState<boolean>(true);
 
-  useEffect(() => {
-    const checkSignState = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("guest home : signIn")
-        router.push("/membership/customMenu");
-      }
-      else {
-        console.log("guest home : no signIn")
-      }
-    });
-    return () => checkSignState();
-  }, [router]);
+  // useEffect(() => {
+  //   const checkSignState = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       console.log("guest home : signIn")
+  //       router.push("/membership/customMenu");
+  //     }
+  //     else {
+  //       console.log("guest home : no signIn")
+  //     }
+  //   });
+  //   return () => checkSignState();
+  // }, [router]);
 
   return (
     <div className="h-full w-full">
       <div className="h-1/2 w-full flex-col">
-        <TimeContext.Provider
-          value={{ timeTitle, setTimeTitle, timeList, setTimeList }}
-        >
+        <TimeContext.Provider value={{ timeTitle, setTimeTitle, timeList, setTimeList, settingBtn, setSettingBtn }}>
           {settingBtn ? (
-            <GuestDisplayTime setBtn={{ settingBtn, setSettingBtn }} />
+            <GuestDisplayTime />
           ) : (
-            <GuestSetGuestTime setBtn={{ settingBtn, setSettingBtn }} />
+            <GuestSetGuestTime />
           )}
         </TimeContext.Provider>
       </div>

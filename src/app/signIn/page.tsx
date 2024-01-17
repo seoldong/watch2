@@ -1,54 +1,46 @@
 "use client";
 import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { auth, provider } from "../../lib/firebase-config";
-import SignInLoading from "./loading";
 
-function SignInPage() {
+
+export default function SignInPage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const handleRedirect = async () => {
       try {
-        setLoading(true);
         const userCred = await getRedirectResult(auth);
-        if(!userCred){
-          setLoading(false);
-          return;
+        if (userCred) {
+          const token = await userCred.user.getIdToken();
+          const url = "/api/signIn";
+          const option = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
+          await fetch(url, option);
+          router.push("/membership/customMenu");
         }
-        const token = await userCred.user.getIdToken();
-        const url = "/api/signIn";
-        const option = {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await fetch(url, option);
-        setLoading(false);
-        router.push("/membership/customMenu");
-      } 
-      catch (error) {
-        console.error('Error during data fetching:', error);
+      } catch (error) {
+        console.log(error);
       }
     };
-
-    fetchData();
-
-    return () => {};
+    handleRedirect();
   }, [router]);
+  
 
-  function googleSigninBtn(e) {
-    e.preventDefault();
-    setLoading(true);
-    signInWithRedirect(auth, provider);
+  function googleSigninBtn() {
+    signInWithRedirect(auth, provider).catch((error) => {
+      console.log(error);
+    });
   }
 
   return (
     <>
-      {loading ? (
-        <SignInLoading />
-      ) : (
+      {
         <div
           className="h-full w-[100%] flex flex-col
         2xl:text-4xl 2xl:mt-10
@@ -62,7 +54,7 @@ function SignInPage() {
             className="my-5 p-2 cursor-pointer border-b border-black 
             hover:border-none hover:bg-slate-400 hover:text-white font-medium
             lg:p-5"
-            onClick={(e) => googleSigninBtn(e)}
+            onClick={(e) => googleSigninBtn()}
           >
             G O O G L E
           </button>
@@ -79,9 +71,7 @@ function SignInPage() {
             G I T H U B
           </button> */}
         </div>
-      )}
+      }
     </>
   );
 }
-
-export default SignInPage;

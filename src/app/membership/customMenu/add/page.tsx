@@ -16,25 +16,25 @@ const CustomAddPage = () => {
   const [selectedTime, setSelectTime] = useState(0);
   const [timeTitleList, setTimeTitleList] = useState<string[]>([]);
 
-  useEffect(() => {
-    const observUser = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const checkList = async () => {
-          const userId = user.uid;
-          const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
-          const userTimeList = (await getDoc(userDataDocRef)).data();
-          const userTimeTitleList = Object.keys(userTimeList);
-          setTimeTitleList(userTimeTitleList);
-        };
-        checkList();
-      } else {
-        console.log("user is not signed in");
-      }
-    });
-    return () => {
-      observUser();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const observUser = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const checkList = async () => {
+  //         const userId = user.uid;
+  //         const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
+  //         const userTimeList = (await getDoc(userDataDocRef)).data();
+  //         const userTimeTitleList = Object.keys(userTimeList);
+  //         setTimeTitleList(userTimeTitleList);
+  //       };
+  //       checkList();
+  //     } else {
+  //       console.log("user is not signed in");
+  //     }
+  //   });
+  //   return () => {
+  //     observUser();
+  //   };
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

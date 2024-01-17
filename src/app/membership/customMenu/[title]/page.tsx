@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../../lib/firebase-config";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { getRedirectResult, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { getSetTime } from "../../../../logic/getTime";
 import MembershipDisplayTime from "../../../../components/membership/membershipDisplayTime";
@@ -16,29 +16,36 @@ const CustomPage: React.FC = () => {
   const [settingTime, setSettingTime] = useState<Date>(new Date());
   const [settingBtn, setSettingBtn] = useState<boolean>(true);
 
+  // useEffect(() => {
+  //   const observUser = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const checkTimeList = async () => {
+  //         const userId = user.uid;
+  //         const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
+  //         const userDataDocCheck = await getDoc(userDataDocRef);
+  //         const timeData = userDataDocCheck.get(title);
+
+  //         if (timeData) {
+  //           const resultsTime: Date = getSetTime(...(timeData as [number, number, number, number, number]));
+  //           setSettingTime(resultsTime);
+  //         }
+  //       };
+  //       checkTimeList();
+  //     } else {
+  //       console.log("[title] > page.tsx : no signed");
+  //       signOut(auth);
+  //     }
+  //   });
+
+  //   return () => {observUser()};
+  // }, [title]);
+
   useEffect(() => {
-    const observUser = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const checkTimeList = async () => {
-          const userId = user.uid;
-          const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
-          const userDataDocCheck = await getDoc(userDataDocRef);
-          const timeData = userDataDocCheck.get(title);
-
-          if (timeData) {
-            const resultsTime: Date = getSetTime(...(timeData as [number, number, number, number, number]));
-            setSettingTime(resultsTime);
-          }
-        };
-        checkTimeList();
-      } else {
-        console.log("[title] > page.tsx : no signed");
-        signOut(auth);
-      }
+    getRedirectResult(auth).then((result) => {
+      console.log("getRedirectResult > result : ", result);
+      
     });
-
-    return () => {observUser()};
-  }, [title]);
+  });
 
   return (
     <>

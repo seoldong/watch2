@@ -4,11 +4,12 @@ import { useState } from "react";
 import { getSetTime, timeData } from "../../logic/getTime";
 import { TimeContext } from "../../lib/guestContext";
 
-function GuestSetGuestTime({ setBtn }) {
+
+function GuestSetGuestTime() {
   const timeContext = useContext(TimeContext); //allObj
   const timeTitle = timeContext.timeTitle; //string
   const timeList = timeContext.timeList[timeTitle]; //obj
-  const timeDataRange = getSetTime(...timeList);
+  const timeDataRange = getSetTime(...timeList as [number, number, number, number, number]);
   const initRange = timeDataRange.getHours() * 60 + timeDataRange.getMinutes(); //number
 
   const [selectValue, setSelectValue] = useState(initRange);
@@ -30,11 +31,11 @@ function GuestSetGuestTime({ setBtn }) {
       [timeTitle]: settings,
     };
     timeContext.setTimeList(newDataObj);
-    setBtn.setSettingBtn(!setBtn.settingBtn);
+    timeContext.setSettingBtn(!timeContext.settingBtn);
   }
 
   function onClickCancel(e) {
-    setBtn.setSettingBtn(!setBtn.settingBtn);
+    timeContext.setSettingBtn(!timeContext.settingBtn);
   }
 
   return (

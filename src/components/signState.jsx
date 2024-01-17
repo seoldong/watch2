@@ -24,8 +24,9 @@ export default function SignState() {
         setSignState(false);
       }
     });
-    return () => checkSignState();
+    return () => checkSignState();W
   }, [router]);
+
 
   async function signOutHandler() {
     try {
@@ -34,8 +35,7 @@ export default function SignState() {
       const sessionStop = await fetch(url, option);
       showCon.setShowMenu(true);
       await signOut(auth);
-      await router.push("/");
-      console.log(showCon);
+      router.push("/");
     } catch (err) {
       console.log(err);
     }

@@ -5,23 +5,28 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { DocumentData, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../lib/firebase-config";
 
-interface Profile {
-  displayName: string;
-  aboutMe: string;
-  photoURL: string;
-}
+
 
 export default function UserProfile() {
   const router = useRouter();
-  const [userProfile, setUserProfile] = useState<Profile | null>(null);
-  const [originProfile, setOriginProfile] = useState<Profile | null>(null);
-  const [isLogIn, setIsLogIn] = useState<boolean>(false);
-  const [checkSession, setCheckSession] = useState<boolean>(false);
+  const [userProfile, setUserProfile] = useState(null);
+  const [originProfile, setOriginProfile] = useState(null);
+  const [isLogIn, setIsLogIn] = useState(false);
+  const [checkSession, setCheckSession] = useState(false);
+
+  console.log(isLogIn);
 
   useEffect(() => {
     const tokenVerification = async () => {
@@ -30,6 +35,7 @@ export default function UserProfile() {
         const option = { method: "GET" };
         const checkSession = await fetch(url, option);
         const checkSessionState = checkSession.status;
+
         if (checkSessionState === 200) {
           setIsLogIn(true);
           setCheckSession(true);
@@ -39,55 +45,45 @@ export default function UserProfile() {
         console.log(error);
       }
     };
-    tokenVerification()
-
-    return () => {};
-  }, [router, setCheckSession, setIsLogIn]);
+    return () => tokenVerification();
+  }, [router]);
 
   useEffect(() => {
-    if (checkSession) {
-      const getUserProfile = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const userId = auth.currentUser.uid;
-          const profileDocRef = doc(db, `appUsers/${userId}/userData/profile`);
-          const profileDocSnapshot = await getDoc(profileDocRef);
-          const userProfileData = profileDocSnapshot.data() as Profile;
-          
-          setUserProfile(userProfileData);
-          setOriginProfile(userProfileData);
-          setIsLogIn(true);
-        } else {
-          setIsLogIn(false);
-          alert("Login is required.");
-          signOut(auth);
-          router.push("/signIn");
-        }
-      });
-      return () => getUserProfile();
-    } else {
-      console.log("Please sign in"); // 추가 작동 설정필요
-    }
-  }, [checkSession, router]);
+    const signState = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userId = auth.currentUser.uid;
+        const profileDocRef = doc(db, `appUsers/${userId}/userData/profile`);
+        const profileDocSnapshot = await getDoc(profileDocRef);
+        const userProfileData = profileDocSnapshot.data();
+        setUserProfile(userProfileData);
+        setOriginProfile(userProfileData);
+        setIsLogIn(true);
+      } else {
+        setIsLogIn(false);
+        alert("Login is required.");
+        signOut(auth);
+        router.push("/signIn");
+      }
+    });
+    return () => signState();
+  }, [router])
+
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const userId = auth.currentUser.uid;
     const profileDocRef = doc(db, `appUsers/${userId}/userData/profile`);
-    const isProfileValid =
-      userProfile &&
-      userProfile.displayName &&
-      userProfile.aboutMe &&
-      userProfile.photoURL;
 
-    if (isLogIn === true && isProfileValid) {
+    if (isLogIn === true) {
       try {
-        // await updateDoc(profileDocRef, userProfile);
+        await updateDoc(profileDocRef, userProfile);
         await setDoc(profileDocRef, userProfile);
         router.refresh();
         router.push("/membership/customMenu");
       } catch (error) {
         console.error("Profile update error :", error);
       }
+      
     } else {
       console.log("Please enter text");
     }

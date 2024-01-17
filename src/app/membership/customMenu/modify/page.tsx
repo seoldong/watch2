@@ -22,7 +22,7 @@ interface CustomMenuModifyPageProps {
 }
 
 
-const CustomMenuModifyPage: React.FC<CustomMenuModifyPageProps> = ({ timeSet, setBtn }) => {
+const CustomMenuModifyPage = ({ timeSet, setBtn }) => {
   const router = useRouter();
   const params = useParams<{title: string}>();
   console.log("params", params);
@@ -32,15 +32,15 @@ const CustomMenuModifyPage: React.FC<CustomMenuModifyPageProps> = ({ timeSet, se
 
   const [selectValue, setSelectValue] = useState(Number(0));
 
-  useEffect(() => {
-    let initTimeRangeValue = 0;
+  // useEffect(() => {
+  //   let initTimeRangeValue = 0;
   
-    if (timeSet && timeSet.settingTime) {
-      initTimeRangeValue =
-        timeSet.settingTime.getHours() * 60 + timeSet.settingTime.getMinutes();
-    }
-    setSelectValue(initTimeRangeValue);
-  }, [timeSet]);
+  //   if (timeSet && timeSet.settingTime) {
+  //     initTimeRangeValue =
+  //       timeSet.settingTime.getHours() * 60 + timeSet.settingTime.getMinutes();
+  //   }
+  //   setSelectValue(initTimeRangeValue);
+  // }, [timeSet]);
   
 
 

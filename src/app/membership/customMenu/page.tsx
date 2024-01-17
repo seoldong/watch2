@@ -20,28 +20,28 @@ function CustomMenuPage() {
   const [tomorrowMid, setTomorrowMid] = useState<remainingDate | undefined>();
   const [toggle, setToggle] = useState<boolean>(false);
 
-  useEffect(() => {
-    const checkSignIn = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        console.log("membership > custommenu : no signIn and push to /");
-        await signOut(auth);
-        router.push("/");
-      }
-    });
-    return () => checkSignIn();
-  }, [router]);
+  // useEffect(() => {
+  //   const checkSignIn = onAuthStateChanged(auth, async (user) => {
+  //     if (!user) {
+  //       console.log("membership > custommenu : no signIn and push to /");
+  //       await signOut(auth);
+  //       router.push("/");
+  //     }
+  //   });
+  //   return () => checkSignIn();
+  // }, [router]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const currentTime = new Date();
-      const tomorrowMid = getSetTime(1, 0, 0, 0, 0);
-      const remainingTime:remainingDate = getRemainingTime(tomorrowMid, currentTime);
-      setTomorrowMid(remainingTime);
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [router]);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     const currentTime = new Date();
+  //     const tomorrowMid = getSetTime(1, 0, 0, 0, 0);
+  //     const remainingTime:remainingDate = getRemainingTime(tomorrowMid, currentTime);
+  //     setTomorrowMid(remainingTime);
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, [router]);
 
   return (
     <div className="h-full w-full">
