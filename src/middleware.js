@@ -6,29 +6,28 @@ export async function middleware(request, response) {
 
   if (pathname === "/") {
     if (session) {
-      return await NextResponse.redirect(new URL("/membership/customMenu", request.url)
-      );
+      return NextResponse.redirect(new URL("/membership/customMenu", request.url));
     }
   }
 
   if (pathname === "/membership/customMenu") {
     if (!session) {
-      return await NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     } else {
-      return await NextResponse.next();
+      return NextResponse.next();
     }
   }
 
   if (pathname === "/membership/userProfile") {
-    const url = "http://localhost:3000/api/signIn";
-    const option = {
+    const url = new URL("/api/signIn", request.url).toString();
+    const options = {
       method: "GET",
       headers: { Cookie: `session=${session?.value}` },
     };
-    const responseAPI = await fetch(url, option);
+    const responseAPI = await fetch(url, options);
 
-    if ((await responseAPI.status) !== 200) {
-      return await NextResponse.redirect(new URL("/signIn", request.url));
+    if (responseAPI.status !== 200) {
+      return NextResponse.redirect(new URL("/signIn", request.url));
     }
     return NextResponse.next();
   }

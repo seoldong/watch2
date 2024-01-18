@@ -8,7 +8,6 @@ import { getSetTime } from "../../../../logic/getTime";
 import MembershipDisplayTime from "../../../../components/membership/membershipDisplayTime";
 import CustomMenuModifyPage from "../modify/page";
 
-
 const CustomPage: React.FC = () => {
   const params = useParams<{ title: string | undefined }>();
   const title = params.title;
@@ -21,12 +20,17 @@ const CustomPage: React.FC = () => {
   //     if (user) {
   //       const checkTimeList = async () => {
   //         const userId = user.uid;
-  //         const userDataDocRef = doc(db,`appUsers/${userId}/userData/timeList`);
+  //         const userDataDocRef = doc(
+  //           db,
+  //           `appUsers/${userId}/userData/timeList`
+  //         );
   //         const userDataDocCheck = await getDoc(userDataDocRef);
   //         const timeData = userDataDocCheck.get(title);
 
   //         if (timeData) {
-  //           const resultsTime: Date = getSetTime(...(timeData as [number, number, number, number, number]));
+  //           const resultsTime: Date = getSetTime(
+  //             ...(timeData as [number, number, number, number, number])
+  //           );
   //           setSettingTime(resultsTime);
   //         }
   //       };
@@ -37,15 +41,10 @@ const CustomPage: React.FC = () => {
   //     }
   //   });
 
-  //   return () => {observUser()};
+  //   return () => {
+  //     observUser();
+  //   };
   // }, [title]);
-
-  useEffect(() => {
-    getRedirectResult(auth).then((result) => {
-      console.log("getRedirectResult > result : ", result);
-      
-    });
-  });
 
   return (
     <>
@@ -62,6 +61,6 @@ const CustomPage: React.FC = () => {
       )}
     </>
   );
-}
+};
 
 export default CustomPage;
